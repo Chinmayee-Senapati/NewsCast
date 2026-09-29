@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ article.title }} - Newscast
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================================= -->
+    <!-- NAVBAR -->
+    <!-- ================================================= -->
+
+    <nav class="navbar">
+
+        <div class="navbar-left">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="logo"
+            >
+                Newscast
+            </a>
+
+
+            <a
+                href="{{ url_for('home') }}"
+                class="nav-button"
+            >
+                {{ translations['home'] }}
+            </a>
+
+        </div>
+
+
+        <div class="navbar-right">
+
+            <a
+                href="{{ url_for('language') }}"
+                class="nav-button"
+            >
+                {{ translations['change_language'] }}
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================================================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ================================================= -->
+
+    <main class="topic-container">
+
+
+        <!-- BACK TO SEARCH -->
+
+        <a
+            href="javascript:history.back()"
+            class="back-button"
+        >
+            ← {{ translations['back_to_search'] }}
+        </a>
+
+
+        <!-- ================================================= -->
+        <!-- ARTICLE -->
+        <!-- ================================================= -->
+
+        <article class="topic-article">
+
+
+            {% if article.thumbnail %}
+
+            <div class="topic-image-container">
+
+                <img
+                    src="{{ article.thumbnail }}"
+                    alt="{{ article.title }}"
+                    class="topic-image"
+                >
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="topic-content">
+
+
+                <!-- SOURCE -->
+
+                <div class="topic-source">
+                    {{ article.source }}
+                </div>
+
+
+                <!-- TITLE -->
+
+                <h1 class="topic-title">
+                    {{ article.title }}
+                </h1>
+
+
+                <!-- DESCRIPTION -->
+
+                {% if article.snippet %}
+
+                <p class="topic-description">
+                    {{ article.snippet }}
+                </p>
+
+                {% endif %}
+
+
+                <!-- ORIGINAL ARTICLE -->
+
+                {% if article.link %}
+
+                <div class="read-original-wrapper">
+
+                    <a
+                        href="{{ article.link }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="read-original-button"
+                    >
+                        {{ translations['read_original'] }} ↗
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+        </article>
+
+
+        <!-- ================================================= -->
+        <!-- PODCAST -->
+        <!-- ================================================= -->
+
+        <section class="podcast-section">
+
+
+            <div class="podcast-header">
+
+                <h2>
+                    🎙️ {{ translations['podcast'] }}
+                </h2>
+
+                <p>
+                    {{ translations['podcast_description'] }}
+                </p>
+
+            </div>
+
+
+            <button
+                id="generatePodcastButton"
+                class="podcast-button"
+                onclick="generatePodcast()"
+            >
+                🎧 {{ translations['generate_podcast'] }}
+            </button>
+
+
+            <div
+                id="podcastStatus"
+                class="podcast-status"
+            ></div>
+
+
+            <div
+                id="podcastResult"
+                class="podcast-result"
+            ></div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ================================================= -->
+
+    <script>
+
+
+        const articleData = {
+
+            title:
+                {{ article.title | tojson }},
+
+            source:
+                {{ article.source | tojson }},
+
+            date:
+                {{ article.date | tojson }},
+
+            snippet:
+                {{ article.snippet | tojson }},
+
+            thumbnail:
+                {{ article.thumbnail | tojson }},
+
+            link:
+                {{ article.link | tojson }}
+
+        };
+
+
+        const currentLanguage =
+            {{ language | tojson }};
+
+
+        // =================================================
+        // GENERATE PODCAST
+        // =================================================
+
+        async function generatePodcast() {
+
+
+            const button =
+                document.getElementById(
+                    "generatePodcastButton"
+                );
+
+
+            const status =
+                document.getElementById(
+                    "podcastStatus"
+                );
+
+
+            const result =
+                document.getElementById(
+                    "podcastResult"
+                );
+
+
+            button.disabled = true;
+
+
+            button.innerText =
+                "⏳ {{ translations['generating'] }}";
+
+
+            status.innerHTML = "";
+
+            result.innerHTML = "";
+
+
+            status.innerHTML = `
+
+                <div class="podcast-loading">
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        {{ translations['generating'] }}
+                    </p>
+
+                    <small>
+                        Collecting sources and creating
+                        your AI podcast...
+                    </small>
+
+                </div>
+
+            `;
+
+
+            try {
+
+
+                const response = await fetch(
+
+                    "{{ url_for('generate_podcast') }}",
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            article: articleData,
+
+                            language: currentLanguage
+
+                        })
+
+                    }
+
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        data.error ||
+                        "Podcast generation failed."
+                    );
+
+                }
+
+
+                status.innerHTML = `
+
+                    <div class="podcast-success">
+
+                        ✓
+                        {{ translations['podcast_ready'] }}
+
+                    </div>
+
+                `;
+
+
+                const formattedScript =
+                    formatPodcastScript(
+                        data.script
+                    );
+
+
+                // =================================================
+                // SOURCES
+                // =================================================
+
+                let sourcesHTML = "";
+
+
+                if (
+                    data.sources &&
+                    data.sources.length > 0
+                ) {
+
+
+                    sourcesHTML = `
+
+                        <div class="podcast-sources">
+
+                            <h3>
+                                📰
+                                {{ translations['sources'] }}
+                            </h3>
+
+                            <div class="source-list">
+
+                    `;
+
+
+                    data.sources.forEach(
+                        function(source, index) {
+
+
+                            sourcesHTML += `
+
+                                <div class="source-card">
+
+                                    <div
+                                        class="source-number"
+                                    >
+                                        ${index + 1}
+                                    </div>
+
+
+                                    <div
+                                        class="source-information"
+                                    >
+
+                                        <h4>
+                                            ${
+                                                escapeHtml(
+                                                    source.title ||
+                                                    "Untitled"
+                                                )
+                                            }
+                                        </h4>
+
+
+                                        <p
+                                            class="source-name"
+                                        >
+                                            ${
+                                                escapeHtml(
+                                                    source.source ||
+                                                    ""
+                                                )
+                                            }
+                                        </p>
+
+
+                                        ${
+                                            source.date
+                                            ? `
+                                                <p
+                                                    class="source-date"
+                                                >
+                                                    ${
+                                                        escapeHtml(
+                                                            source.date
+                                                        )
+                                                    }
+                                                </p>
+                                            `
+                                            : ""
+                                        }
+
+
+                                        ${
+                                            source.link
+                                            ? `
+                                                <a
+                                                    href="${escapeAttribute(
+                                                        source.link
+                                                    )}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="source-link"
+                                                >
+                                                    Read Source ↗
+                                                </a>
+                                            `
+                                            : ""
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        }
+                    );
+
+
+                    sourcesHTML += `
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                // =================================================
+                // PODCAST RESULT
+                // =================================================
+
+                result.innerHTML = `
+
+                    <div class="podcast-player">
+
+                        <h2>
+                            🎧
+                            {{ translations['podcast'] }}
+                        </h2>
+
+
+                        <audio
+                            controls
+                            preload="metadata"
+                            class="podcast-audio"
+                        >
+
+                            <source
+                                src="${escapeAttribute(
+                                    data.audio_url
+                                )}"
+                                type="audio/mpeg"
+                            >
+
+                            Your browser does not
+                            support audio playback.
+
+                        </audio>
+
+                    </div>
+
+
+                    <div class="podcast-transcript">
+
+                        <h3>
+                            📝
+                            {{ translations['transcript'] }}
+                        </h3>
+
+
+                        <div
+                            class="transcript-content"
+                        >
+                            ${formattedScript}
+                        </div>
+
+                    </div>
+
+
+                    ${sourcesHTML}
+
+                `;
+
+
+                result.scrollIntoView({
+
+                    behavior: "smooth",
+
+                    block: "start"
+
+                });
+
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Podcast generation error:",
+                    error
+                );
+
+
+                status.innerHTML = `
+
+                    <div class="podcast-error">
+
+                        ❌
+                        ${
+                            escapeHtml(
+                                error.message ||
+                                "Something went wrong."
+                            )
+                        }
+
+                    </div>
+
+                `;
+
+            }
+
+
+            finally {
+
+                button.disabled = false;
+
+                button.innerText =
+                    "🎧 {{ translations['generate_podcast'] }}";
+
+            }
+
+        }
+
+
+        // =================================================
+        // FORMAT PODCAST SCRIPT
+        // =================================================
+
+        function formatPodcastScript(script) {
+
+            if (!script) {
+
+                return `
+                    <p>
+                        No transcript available.
+                    </p>
+                `;
+
+            }
+
+
+            const safeScript =
+                escapeHtml(script);
+
+
+            let formatted =
+                safeScript
+
+                    .replace(
+                        /HOST:/gi,
+                        '<div class="speaker-label host-label">HOST</div>'
+                    )
+
+                    .replace(
+                        /EXPERT:/gi,
+                        '<div class="speaker-label expert-label">EXPERT</div>'
+                    );
+
+
+            formatted =
+                formatted.replace(
+                    /\n/g,
+                    "<br>"
+                );
+
+
+            return formatted;
+
+        }
+
+
+        // =================================================
+        // ESCAPE HTML
+        // =================================================
+
+        function escapeHtml(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            return String(value)
+
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        // =================================================
+        // ESCAPE ATTRIBUTE
+        // =================================================
+
+        function escapeAttribute(value) {
+
+            if (!value) {
+
+                return "";
+
+            }
+
+
+            return String(value)
+
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

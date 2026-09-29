@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Newscast</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Newscast
+        </div>
+
+        <div class="nav-right">
+
+            <span>
+                🌐 {{ translations["language_name"] }}
+            </span>
+
+            <!-- CHANGE LANGUAGE BUTTON -->
+
+            <a href="{{ url_for('language') }}"
+               class="nav-button">
+
+                {{ translations["change_language"] }}
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h1>
+            {{ translations["home_title"] }}
+        </h1>
+
+        <p>
+            {{ translations["home_description"] }}
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <form class="search-box"
+              action="{{ url_for('search') }}"
+              method="GET">
+
+            <input
+                type="text"
+                name="q"
+                placeholder="{{ translations['search_placeholder'] }}"
+                required
+            >
+
+            <button type="submit">
+                🔍 {{ translations["search_button"] }}
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- TRENDING TOPICS -->
+
+    <section class="news-section">
+
+        <div class="section-title">
+
+            <h2>
+                {{ translations["trending"] }}
+            </h2>
+
+        </div>
+
+
+        <div class="topic-grid">
+
+
+            <!-- WORLD -->
+
+            <div class="topic-card">
+
+                <span>🌍</span>
+
+                <h3>
+                    {{ translations["world"] }}
+                </h3>
+
+                <p>
+                    {{ translations["world_description"] }}
+                </p>
+
+            </div>
+
+
+            <!-- INDIA -->
+
+            <div class="topic-card">
+
+                <span>🇮🇳</span>
+
+                <h3>
+                    {{ translations["india"] }}
+                </h3>
+
+                <p>
+                    {{ translations["india_description"] }}
+                </p>
+
+            </div>
+
+
+            <!-- TECHNOLOGY -->
+
+            <div class="topic-card">
+
+                <span>💻</span>
+
+                <h3>
+                    {{ translations["technology"] }}
+                </h3>
+
+                <p>
+                    {{ translations["technology_description"] }}
+                </p>
+
+            </div>
+
+
+            <!-- SPORTS -->
+
+            <div class="topic-card">
+
+                <span>🏏</span>
+
+                <h3>
+                    {{ translations["sports"] }}
+                </h3>
+
+                <p>
+                    {{ translations["sports_description"] }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LATEST NEWS -->
+
+    <section class="news-section">
+
+        <div class="section-title">
+
+            <h2>
+                {{ translations["latest_news"] }}
+            </h2>
+
+        </div>
+
+
+        <div class="empty-news">
+
+            <div class="empty-icon">
+                📰
+            </div>
+
+            <h3>
+                {{ translations["news_appear"] }}
+            </h3>
+
+            <p>
+                {{ translations["news_instruction"] }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+</body>
+
+</html>

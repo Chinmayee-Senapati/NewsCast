@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Newscast - Choose Language</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="language-page">
+
+        <div class="language-card">
+
+            <h1>Newscast</h1>
+
+            <p>
+                {{ "Choose Your Language" }}
+            </p>
+
+            <form
+                method="POST"
+                action="{{ url_for('set_language') }}"
+            >
+
+                <button
+                    type="submit"
+                    name="language"
+                    value="en"
+                    class="language-button"
+                >
+                    🇬🇧 English
+                </button>
+
+                <button
+                    type="submit"
+                    name="language"
+                    value="hi"
+                    class="language-button"
+                >
+                    🇮🇳 हिंदी
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ translations["search_results"] }} - Newscast
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        Newscast
+    </div>
+
+    <div class="nav-right">
+
+        <span>
+            🌐 {{ translations["language_name"] }}
+        </span>
+
+        <!-- HOME BUTTON -->
+
+        <a href="{{ url_for('home') }}"
+           class="nav-button">
+
+            {{ translations["home"] }}
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="search-page">
+
+    <h1>
+        {{ translations["search_results"] }}
+    </h1>
+
+    <p class="search-query">
+
+        {{ translations["results_for"] }}
+
+        <strong>
+            "{{ query }}"
+        </strong>
+
+    </p>
+
+
+    {% if results %}
+
+        {% for article in results %}
+
+            <div class="result-card">
+
+
+                {% if article["thumbnail"] %}
+
+                    <img
+                        src="{{ article['thumbnail'] }}"
+                        alt="{{ article['title'] }}"
+                        class="result-image"
+                    >
+
+                {% else %}
+
+                    <div class="result-image">
+                        📰
+                    </div>
+
+                {% endif %}
+
+
+                <div class="result-content">
+
+
+                    <span class="source">
+
+                        {{ article["source"] }}
+
+                        {% if article["date"] %}
+                            • {{ article["date"] }}
+                        {% endif %}
+
+                    </span>
+
+
+                    <h2>
+                        {{ article["title"] }}
+                    </h2>
+
+
+                    {% if article["snippet"] %}
+
+                        <p>
+                            {{ article["snippet"] }}
+                        </p>
+
+                    {% endif %}
+
+
+                    <!-- READ STORY BUTTON -->
+
+                    <a
+                        href="{{ url_for(
+                            'topic',
+                            title=article['title'],
+                            source=article['source'],
+                            date=article['date'],
+                            snippet=article['snippet'],
+                            thumbnail=article['thumbnail'],
+                            link=article['link']
+                        ) }}"
+                        class="read-story-button"
+                    >
+
+                        {{ translations["read_story"] }}
+                        →
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="empty-news">
+
+            <div class="empty-icon">
+                📰
+            </div>
+
+            <h3>
+                No news found
+            </h3>
+
+            <p>
+                Try searching for another topic.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+</main>
+
+</body>
+
+</html>
