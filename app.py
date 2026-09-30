@@ -182,6 +182,54 @@ def topic():
 
 
 # ==========================================================
+# TOPIC NEWS
+# ==========================================================
+
+@app.route("/news-topic/<topic_name>")
+def news_topic(topic_name):
+    language = get_current_language()
+    translations = get_translations(language)
+
+    topic_map = {
+        "world": "World news",
+        "india": "India news",
+        "technology": "Technology news",
+        "sports": "Sports news"
+    }
+
+    query = topic_map.get(
+        topic_name.lower()
+    )
+
+    if not query:
+        return "Topic not found", 404
+
+    try:
+        results = search_news(
+            query,
+            language=language
+        )
+    except Exception as error:
+        print(
+            f"Topic news search failed: {error}"
+        )
+        results = []
+
+    return render_template(
+        "search.html",
+        query=query,
+        results=results,
+        language=language,
+        translations=translations
+    )
+
+
+# ==========================================================
+# GENERATE PODCAST
+# ==========================================================
+
+
+# ==========================================================
 # GENERATE PODCAST
 # ==========================================================
 

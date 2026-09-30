@@ -1,6 +1,6 @@
 /* =========================================================
    NEWCAST — CLEAN MAIN STYLESHEET
-   ========================================================= */
+========================================================= */
 
 /* ---------- RESET ---------- */
 
@@ -256,18 +256,37 @@ a {
     gap: 20px;
 }
 
+
+/* ---------- CLICKABLE TOPIC CARDS ---------- */
+
+.topic-card-form {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
 .topic-card {
+    width: 100%;
     padding: 25px;
     background: #ffffff;
     border: 1px solid #e5e5e5;
     border-radius: 12px;
     cursor: pointer;
     transition: 0.2s ease;
+    text-align: left;
+    font: inherit;
+    color: #111111;
 }
 
 .topic-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.topic-card:focus-visible {
+    outline: 3px solid #777777;
+    outline-offset: 2px;
 }
 
 .topic-card span {
@@ -647,6 +666,7 @@ a {
 /* ---------- RESPONSIVE ---------- */
 
 @media (max-width: 900px) {
+
     .navbar {
         padding: 12px 25px;
     }
@@ -661,6 +681,7 @@ a {
 }
 
 @media (max-width: 768px) {
+
     .navbar {
         min-height: auto;
         flex-wrap: wrap;
@@ -778,6 +799,7 @@ a {
 }
 
 @media (max-width: 480px) {
+
     .logo {
         font-size: 24px;
     }

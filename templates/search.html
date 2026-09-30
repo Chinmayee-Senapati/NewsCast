@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>
-        {{ translations["search_results"] }} - Newscast
+        {% if query == "World news" %}World News{% elif query == "India news" %}India News{% elif query == "Technology news" %}Technology News{% elif query == "Sports news" %}Sports News{% else %}{{ translations["search_results"] }}{% endif %} - Newscast
     </title>
 
     <link rel="stylesheet"
@@ -29,7 +29,7 @@
     <div class="nav-right">
 
         <span>
-            🌐 {{ translations["language_name"] }}
+            {{ translations["language_name"] }}
         </span>
 
         <!-- HOME BUTTON -->
@@ -40,6 +40,8 @@
             {{ translations["home"] }}
 
         </a>
+        <a href="{{ url_for('home') }}" class="nav-button">Search Again</a>
+        <a href="{{ url_for('language') }}" class="nav-button">{{ translations["change_language"] }}</a>
 
     </div>
 
@@ -49,7 +51,7 @@
 <main class="search-page">
 
     <h1>
-        {{ translations["search_results"] }}
+        {% if query == "World news" %}World News{% elif query == "India news" %}India News{% elif query == "Technology news" %}Technology News{% elif query == "Sports news" %}Sports News{% else %}{{ translations["search_results"] }}{% endif %}
     </h1>
 
     <p class="search-query">
@@ -152,11 +154,11 @@
             </div>
 
             <h3>
-                No news found
+                {% if query %}No news found{% else %}Please enter a topic to search for news.{% endif %}
             </h3>
 
             <p>
-                Try searching for another topic.
+                {% if query %}Try searching for another topic.{% endif %}
             </p>
 
         </div>
@@ -169,3 +171,7 @@
 </body>
 
 </html>
+
+
+
+

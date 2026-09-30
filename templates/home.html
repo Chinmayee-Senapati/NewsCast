@@ -90,114 +90,49 @@
             </h2>
 
         </div>
+            <form method="GET" action="{{ url_for('news_topic', topic_name='world') }}" class="topic-card-form">
+                <input type="hidden" name="q" value="World">
 
+                <button type="submit" class="topic-card">
+                    <span>🌍</span>
+                    <h3>{{ translations["world"] }}</h3>
+                    <p>{{ translations["world_description"] }}</p>
+                </button>
+            </form>
 
-        <div class="topic-grid">
+            <form method="GET" action="{{ url_for('news_topic', topic_name='india') }}" class="topic-card-form">
+                <input type="hidden" name="q" value="India">
 
+                <button type="submit" class="topic-card">
+                    <span>🇮🇳</span>
+                    <h3>{{ translations["india"] }}</h3>
+                    <p>{{ translations["india_description"] }}</p>
+                </button>
+            </form>
 
-            <!-- WORLD -->
+            <form method="GET" action="{{ url_for('news_topic', topic_name='technology') }}" class="topic-card-form">
+                <input type="hidden" name="q" value="Technology">
 
-            <div class="topic-card">
+                <button type="submit" class="topic-card">
+                    <span>💻</span>
+                    <h3>{{ translations["technology"] }}</h3>
+                    <p>{{ translations["technology_description"] }}</p>
+                </button>
+            </form>
 
-                <span>🌍</span>
+            <form method="GET" action="{{ url_for('news_topic', topic_name='sports') }}" class="topic-card-form">
+                <input type="hidden" name="q" value="Sports">
 
-                <h3>
-                    {{ translations["world"] }}
-                </h3>
-
-                <p>
-                    {{ translations["world_description"] }}
-                </p>
-
-            </div>
-
-
-            <!-- INDIA -->
-
-            <div class="topic-card">
-
-                <span>🇮🇳</span>
-
-                <h3>
-                    {{ translations["india"] }}
-                </h3>
-
-                <p>
-                    {{ translations["india_description"] }}
-                </p>
-
-            </div>
-
-
-            <!-- TECHNOLOGY -->
-
-            <div class="topic-card">
-
-                <span>💻</span>
-
-                <h3>
-                    {{ translations["technology"] }}
-                </h3>
-
-                <p>
-                    {{ translations["technology_description"] }}
-                </p>
-
-            </div>
-
-
-            <!-- SPORTS -->
-
-            <div class="topic-card">
-
-                <span>🏏</span>
-
-                <h3>
-                    {{ translations["sports"] }}
-                </h3>
-
-                <p>
-                    {{ translations["sports_description"] }}
-                </p>
-
-            </div>
+                <button type="submit" class="topic-card">
+                    <span>🏏</span>
+                    <h3>{{ translations["sports"] }}</h3>
+                    <p>{{ translations["sports_description"] }}</p>
+                </button>
+            </form>
 
         </div>
 
     </section>
-
-
-    <!-- LATEST NEWS -->
-
-    <section class="news-section">
-
-        <div class="section-title">
-
-            <h2>
-                {{ translations["latest_news"] }}
-            </h2>
-
-        </div>
-
-
-        <div class="empty-news">
-
-            <div class="empty-icon">
-                📰
-            </div>
-
-            <h3>
-                {{ translations["news_appear"] }}
-            </h3>
-
-            <p>
-                {{ translations["news_instruction"] }}
-            </p>
-
-        </div>
-
-    </section>
-
 
 </body>
 
