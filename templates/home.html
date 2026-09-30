@@ -7,7 +7,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Newscast</title>
+    <title>NEWSCast</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
@@ -21,7 +21,7 @@
     <nav class="navbar">
 
         <div class="logo">
-            Newscast
+            NEWSCast
         </div>
 
         <div class="nav-right">
@@ -90,6 +90,7 @@
             </h2>
 
         </div>
+        <div class="topic-grid">
             <form method="GET" action="{{ url_for('news_topic', topic_name='world') }}" class="topic-card-form">
                 <input type="hidden" name="q" value="World">
 
@@ -137,3 +138,4 @@
 </body>
 
 </html>
+

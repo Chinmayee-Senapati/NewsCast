@@ -831,3 +831,1116 @@ a {
         text-align: center;
     }
 }
+/* ================================
+   NEWCAST DARK THEME
+   ================================ */
+
+body {
+    background: #0f1115;
+    color: #f1f1f1;
+}
+
+nav,
+.navbar {
+    background: #151820;
+    border-color: #292d36;
+}
+
+.logo,
+.nav-right,
+.nav-right span {
+    color: #f1f1f1;
+}
+
+.nav-button,
+.back-button,
+.read-story-button,
+.read-original-button,
+.podcast-button {
+    background: #f1f1f1;
+    color: #111111;
+    border-color: #f1f1f1;
+}
+
+.nav-button:hover,
+.back-button:hover,
+.read-story-button:hover,
+.read-original-button:hover,
+.podcast-button:hover {
+    background: #d7d7d7;
+    color: #111111;
+}
+
+.search-container,
+.search-box,
+.topic-card,
+.news-card,
+.article-card,
+.podcast-container,
+.source-card,
+.transcript-container {
+    background: #181b22;
+    color: #f1f1f1;
+    border-color: #292d36;
+}
+
+.topic-card:hover,
+.news-card:hover,
+.article-card:hover,
+.source-card:hover {
+    background: #1f232c;
+}
+
+input,
+textarea,
+select {
+    background: #12151b;
+    color: #f1f1f1;
+    border-color: #343944;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #858b98;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #f1f1f1;
+}
+
+p,
+span,
+.article-snippet,
+.news-snippet,
+.source-date {
+    color: #b8bdc8;
+}
+
+a {
+    color: #f1f1f1;
+}
+
+footer {
+    background: #151820;
+    color: #b8bdc8;
+    border-color: #292d36;
+}
+
+.error,
+.error-message {
+    background: #32181c;
+    color: #ffb4b4;
+    border-color: #6b2932;
+}
+
+/* =========================================
+   NEWCAST — POLISHED DARK THEME
+   ========================================= */
+
+:root {
+    --bg-main: #0b0f14;
+    --bg-surface: #121821;
+    --bg-card: #171e28;
+    --bg-card-hover: #1d2632;
+    --bg-input: #0e141c;
+    --border-dark: #293442;
+    --text-main: #f5f7fa;
+    --text-secondary: #aeb8c5;
+    --text-muted: #7f8b99;
+    --accent: #5ec8ff;
+    --accent-dark: #168bd0;
+}
+
+/* PAGE */
+html,
+body {
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* MAIN STRUCTURAL AREAS */
+main,
+section,
+article,
+.container,
+.content,
+.hero,
+.hero-section,
+.search-section,
+.trending-section,
+.news-section,
+.results-section {
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* NAVBAR */
+nav,
+.navbar,
+header {
+    background: #10151d !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.logo {
+    color: var(--text-main) !important;
+}
+
+.nav-right,
+.nav-right span {
+    color: var(--text-main) !important;
+}
+
+/* HEADINGS */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-main) !important;
+}
+
+p {
+    color: var(--text-secondary) !important;
+}
+
+/* HERO */
+.hero,
+.hero-section {
+    background: var(--bg-main) !important;
+}
+
+.hero h1,
+.hero-section h1 {
+    color: var(--text-main) !important;
+}
+
+.hero p,
+.hero-section p {
+    color: var(--text-secondary) !important;
+}
+
+/* SEARCH BAR */
+.search-container {
+    background: #151b24 !important;
+    border: 1px solid var(--border-dark) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+.search-container input,
+.search-box input,
+input[type="text"] {
+    background: var(--bg-input) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+}
+
+input::placeholder {
+    color: var(--text-muted) !important;
+}
+
+.search-container button,
+.search-button {
+    background: var(--accent-dark) !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+.search-container button:hover,
+.search-button:hover {
+    background: var(--accent) !important;
+    color: #071018 !important;
+}
+
+/* TRENDING TOPICS */
+.topic-card {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-dark) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.topic-card:hover {
+    background: var(--bg-card-hover) !important;
+    border-color: #3b8db8 !important;
+    transform: translateY(-3px);
+}
+
+/* NEWS CARDS */
+.news-card,
+.article-card,
+.result-card,
+.story-card {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
+}
+
+.news-card:hover,
+.article-card:hover,
+.result-card:hover,
+.story-card:hover {
+    background: var(--bg-card-hover) !important;
+}
+
+/* NEWS CARD TEXT */
+.news-card h2,
+.news-card h3,
+.article-card h2,
+.article-card h3,
+.result-card h2,
+.result-card h3,
+.story-card h2,
+.story-card h3 {
+    color: var(--text-main) !important;
+}
+
+.news-card p,
+.article-card p,
+.result-card p,
+.story-card p {
+    color: var(--text-secondary) !important;
+}
+
+/* SOURCE / DATE TEXT */
+.news-source,
+.article-source,
+.source-date,
+.news-date,
+.article-date {
+    color: var(--accent) !important;
+}
+
+/* BUTTONS */
+.nav-button,
+.back-button,
+.read-story-button,
+.read-original-button,
+.podcast-button {
+    background: #1b2633 !important;
+    color: var(--text-main) !important;
+    border: 1px solid #354556 !important;
+}
+
+.nav-button:hover,
+.back-button:hover,
+.read-story-button:hover,
+.read-original-button:hover,
+.podcast-button:hover {
+    background: var(--accent) !important;
+    color: #071018 !important;
+    border-color: var(--accent) !important;
+}
+
+/* PRIMARY PODCAST BUTTON */
+.podcast-button {
+    background: var(--accent-dark) !important;
+    border-color: var(--accent-dark) !important;
+    color: #ffffff !important;
+}
+
+.podcast-button:hover {
+    background: var(--accent) !important;
+    color: #071018 !important;
+}
+
+/* STORY PAGE */
+.topic-container,
+.article-container,
+.story-container,
+.podcast-container {
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* SOURCE CARDS */
+.source-card,
+.sources-card {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.source-card p,
+.sources-card p {
+    color: var(--text-secondary) !important;
+}
+
+.source-link {
+    color: var(--accent) !important;
+}
+
+/* PODCAST */
+.podcast-container,
+.transcript-container,
+.transcript,
+.audio-container {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.transcript p,
+.transcript-container p {
+    color: var(--text-secondary) !important;
+}
+
+/* AUDIO PLAYER */
+audio {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* LANGUAGE PAGE */
+.language-container,
+.language-card,
+.language-box,
+.language-selection,
+.language-page {
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+.language-container > *,
+.language-card > *,
+.language-box > *,
+.language-selection > * {
+    color: var(--text-main) !important;
+}
+
+.language-container h1,
+.language-container h2,
+.language-card h1,
+.language-card h2,
+.language-box h1,
+.language-box h2 {
+    color: var(--text-main) !important;
+}
+
+.language-container p,
+.language-card p,
+.language-box p {
+    color: var(--text-secondary) !important;
+}
+
+.language-button {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-dark) !important;
+}
+
+.language-button:hover {
+    background: var(--accent) !important;
+    color: #071018 !important;
+    border-color: var(--accent) !important;
+}
+
+/* ERROR / EMPTY STATES */
+.error,
+.error-message {
+    background: #32171c !important;
+    color: #ffb8c0 !important;
+    border-color: #71313b !important;
+}
+
+/* LINKS */
+a {
+    color: var(--text-main);
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+/* FOOTER */
+footer {
+    background: #10151d !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--border-dark) !important;
+}
+
+/* SELECTION */
+::selection {
+    background: var(--accent) !important;
+    color: #071018 !important;
+}
+
+
+/* =========================================
+   NEWCAST — POLISHED DARK THEME
+   ========================================= */
+
+:root {
+    --bg-main: #0b0f14;
+    --bg-surface: #121821;
+    --bg-card: #171e28;
+    --bg-card-hover: #1d2632;
+    --bg-input: #0e141c;
+    --border-dark: #293442;
+    --text-main: #f5f7fa;
+    --text-secondary: #aeb8c5;
+    --text-muted: #7f8b99;
+    --accent: #5ec8ff;
+    --accent-dark: #168bd0;
+}
+
+/* PAGE */
+html,
+body {
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* MAIN STRUCTURAL AREAS */
+main,
+section,
+article,
+.container,
+.content,
+.hero,
+.hero-section,
+.search-section,
+.trending-section,
+.news-section,
+.results-section {
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* NAVBAR */
+nav,
+.navbar,
+header {
+    background: #10151d !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.logo {
+    color: var(--text-main) !important;
+}
+
+.nav-right,
+.nav-right span {
+    color: var(--text-main) !important;
+}
+
+/* HEADINGS */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-main) !important;
+}
+
+p {
+    color: var(--text-secondary) !important;
+}
+
+/* HERO */
+.hero,
+.hero-section {
+    background: var(--bg-main) !important;
+}
+
+.hero h1,
+.hero-section h1 {
+    color: var(--text-main) !important;
+}
+
+.hero p,
+.hero-section p {
+    color: var(--text-secondary) !important;
+}
+
+/* SEARCH BAR */
+.search-container {
+    background: #151b24 !important;
+    border: 1px solid var(--border-dark) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+.search-container input,
+.search-box input,
+input[type="text"] {
+    background: var(--bg-input) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+}
+
+input::placeholder {
+    color: var(--text-muted) !important;
+}
+
+.search-container button,
+.search-button {
+    background: var(--accent-dark) !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+.search-container button:hover,
+.search-button:hover {
+    background: var(--accent) !important;
+    color: #071018 !important;
+}
+
+/* TRENDING TOPICS */
+.topic-card {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-dark) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.topic-card:hover {
+    background: var(--bg-card-hover) !important;
+    border-color: #3b8db8 !important;
+    transform: translateY(-3px);
+}
+
+/* NEWS CARDS */
+.news-card,
+.article-card,
+.result-card,
+.story-card {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
+}
+
+.news-card:hover,
+.article-card:hover,
+.result-card:hover,
+.story-card:hover {
+    background: var(--bg-card-hover) !important;
+}
+
+/* NEWS CARD TEXT */
+.news-card h2,
+.news-card h3,
+.article-card h2,
+.article-card h3,
+.result-card h2,
+.result-card h3,
+.story-card h2,
+.story-card h3 {
+    color: var(--text-main) !important;
+}
+
+.news-card p,
+.article-card p,
+.result-card p,
+.story-card p {
+    color: var(--text-secondary) !important;
+}
+
+/* SOURCE / DATE TEXT */
+.news-source,
+.article-source,
+.source-date,
+.news-date,
+.article-date {
+    color: var(--accent) !important;
+}
+
+/* BUTTONS */
+.nav-button,
+.back-button,
+.read-story-button,
+.read-original-button,
+.podcast-button {
+    background: #1b2633 !important;
+    color: var(--text-main) !important;
+    border: 1px solid #354556 !important;
+}
+
+.nav-button:hover,
+.back-button:hover,
+.read-story-button:hover,
+.read-original-button:hover,
+.podcast-button:hover {
+    background: var(--accent) !important;
+    color: #071018 !important;
+    border-color: var(--accent) !important;
+}
+
+/* PRIMARY PODCAST BUTTON */
+.podcast-button {
+    background: var(--accent-dark) !important;
+    border-color: var(--accent-dark) !important;
+    color: #ffffff !important;
+}
+
+.podcast-button:hover {
+    background: var(--accent) !important;
+    color: #071018 !important;
+}
+
+/* STORY PAGE */
+.topic-container,
+.article-container,
+.story-container,
+.podcast-container {
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+/* SOURCE CARDS */
+.source-card,
+.sources-card {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.source-card p,
+.sources-card p {
+    color: var(--text-secondary) !important;
+}
+
+.source-link {
+    color: var(--accent) !important;
+}
+
+/* PODCAST */
+.podcast-container,
+.transcript-container,
+.transcript,
+.audio-container {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-dark) !important;
+}
+
+.transcript p,
+.transcript-container p {
+    color: var(--text-secondary) !important;
+}
+
+/* AUDIO PLAYER */
+audio {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* LANGUAGE PAGE */
+.language-container,
+.language-card,
+.language-box,
+.language-selection,
+.language-page {
+    background: var(--bg-main) !important;
+    color: var(--text-main) !important;
+}
+
+.language-container > *,
+.language-card > *,
+.language-box > *,
+.language-selection > * {
+    color: var(--text-main) !important;
+}
+
+.language-container h1,
+.language-container h2,
+.language-card h1,
+.language-card h2,
+.language-box h1,
+.language-box h2 {
+    color: var(--text-main) !important;
+}
+
+.language-container p,
+.language-card p,
+.language-box p {
+    color: var(--text-secondary) !important;
+}
+
+.language-button {
+    background: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-dark) !important;
+}
+
+.language-button:hover {
+    background: var(--accent) !important;
+    color: #071018 !important;
+    border-color: var(--accent) !important;
+}
+
+/* ERROR / EMPTY STATES */
+.error,
+.error-message {
+    background: #32171c !important;
+    color: #ffb8c0 !important;
+    border-color: #71313b !important;
+}
+
+/* LINKS */
+a {
+    color: var(--text-main);
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+/* FOOTER */
+footer {
+    background: #10151d !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--border-dark) !important;
+}
+
+/* SELECTION */
+::selection {
+    background: var(--accent) !important;
+    color: #071018 !important;
+}
+
+
+/* =========================================
+   NEWCAST — FINAL DARK UI POLISH
+   ========================================= */
+
+/* TOPIC CARDS — GIVE THEM BREATHING ROOM */
+.topic-grid {
+    gap: 24px !important;
+    padding: 8px 0 20px !important;
+}
+
+.topic-card-form {
+    margin: 0 !important;
+}
+
+.topic-card {
+    min-height: 150px;
+    padding: 28px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, #18212c, #121922) !important;
+    border: 1px solid #2d3b4a !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+.topic-card:hover {
+    background: linear-gradient(145deg, #1d2c3b, #17212c) !important;
+    border-color: #4aaed8 !important;
+    box-shadow: 0 12px 30px rgba(30, 160, 220, 0.12) !important;
+    transform: translateY(-4px);
+}
+
+.topic-card h3 {
+    color: #f5f7fa !important;
+}
+
+.topic-card p {
+    color: #9eabb9 !important;
+}
+
+
+/* SEARCH BUTTON — BRIGHT AND EASY TO SEE */
+.search-container button,
+.search-button {
+    background: linear-gradient(135deg, #65d5ff, #329fd5) !important;
+    color: #071018 !important;
+    border: 1px solid #7cddff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 5px 18px rgba(70, 190, 240, 0.25) !important;
+}
+
+.search-container button:hover,
+.search-button:hover {
+    background: linear-gradient(135deg, #8ae2ff, #55bce8) !important;
+    color: #061018 !important;
+    box-shadow: 0 7px 24px rgba(70, 190, 240, 0.35) !important;
+}
+
+
+/* =========================================
+   PODCAST — LIVELY DARK DESIGN
+   ========================================= */
+
+.podcast-section {
+    margin-top: 36px !important;
+    padding: 32px !important;
+    border-radius: 20px !important;
+    background:
+        radial-gradient(circle at top right, rgba(58, 170, 220, 0.14), transparent 35%),
+        linear-gradient(145deg, #151e29, #0f151d) !important;
+    border: 1px solid #2c3c4c !important;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35) !important;
+}
+
+.podcast-header {
+    padding: 10px 4px 24px !important;
+    border-bottom: 1px solid #293746 !important;
+}
+
+.podcast-header h2 {
+    color: #f7fbff !important;
+    font-size: 28px !important;
+}
+
+.podcast-header p {
+    color: #aebbc8 !important;
+}
+
+
+/* PODCAST BUTTON */
+.podcast-button {
+    margin-top: 18px !important;
+    background: linear-gradient(135deg, #65d5ff, #278fc4) !important;
+    color: #061018 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 8px 22px rgba(65, 190, 240, 0.2) !important;
+}
+
+.podcast-button:hover {
+    background: linear-gradient(135deg, #8be3ff, #4bb7e5) !important;
+    transform: translateY(-2px);
+}
+
+
+/* PODCAST LOADING */
+.podcast-loading {
+    margin-top: 24px !important;
+    padding: 24px !important;
+    border-radius: 14px !important;
+    background: #111a23 !important;
+    border: 1px solid #2b3b4a !important;
+}
+
+.podcast-loading p {
+    color: #dce8f0 !important;
+}
+
+.podcast-loading small {
+    color: #8797a6 !important;
+}
+
+
+/* PODCAST RESULT */
+.podcast-result {
+    margin-top: 28px !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+
+/* AUDIO PLAYER CARD */
+.podcast-player {
+    padding: 26px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, #1a2632, #121a23) !important;
+    border: 1px solid #304354 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28) !important;
+}
+
+.podcast-player h2 {
+    color: #f4f9fc !important;
+    margin-bottom: 18px !important;
+}
+
+.podcast-audio {
+    width: 100% !important;
+    border-radius: 12px !important;
+}
+
+
+/* TRANSCRIPT */
+.podcast-transcript {
+    margin-top: 22px !important;
+    padding: 26px !important;
+    border-radius: 16px !important;
+    background: #151e28 !important;
+    border: 1px solid #293a49 !important;
+}
+
+.podcast-transcript h3 {
+    color: #65d5ff !important;
+    margin-bottom: 18px !important;
+}
+
+.transcript-content {
+    background: #0e151d !important;
+    color: #cbd6df !important;
+    border: 1px solid #253441 !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+}
+
+
+/* SOURCES */
+.podcast-sources {
+    margin-top: 22px !important;
+    padding: 26px !important;
+    border-radius: 16px !important;
+    background: #151e28 !important;
+    border: 1px solid #293a49 !important;
+}
+
+.podcast-sources h3 {
+    color: #65d5ff !important;
+    margin-bottom: 18px !important;
+}
+
+.source-list {
+    gap: 14px !important;
+}
+
+.source-card {
+    padding: 18px !important;
+    border-radius: 12px !important;
+    background: #101820 !important;
+    border: 1px solid #293947 !important;
+}
+
+.source-card:hover {
+    background: #18232e !important;
+    border-color: #3b7f9e !important;
+}
+
+.source-number {
+    background: #278fc4 !important;
+    color: #061018 !important;
+}
+
+.source-information h4 {
+    color: #edf5fa !important;
+}
+
+.source-name,
+.source-date {
+    color: #8999a8 !important;
+}
+
+.source-link {
+    color: #65d5ff !important;
+}
+
+.source-link:hover {
+    color: #9ae7ff !important;
+}
+
+
+/* SUCCESS / ERROR STATES */
+.podcast-success {
+    margin-top: 20px !important;
+    padding: 16px !important;
+    border-radius: 12px !important;
+    background: #10291f !important;
+    color: #8ee6b7 !important;
+    border: 1px solid #276044 !important;
+}
+
+.podcast-error {
+    margin-top: 20px !important;
+    padding: 16px !important;
+    border-radius: 12px !important;
+    background: #30191d !important;
+    color: #ffadb5 !important;
+    border: 1px solid #69343c !important;
+}
+
+
+/* MOBILE TOPIC SPACING */
+@media (max-width: 768px) {
+    .topic-grid {
+        gap: 18px !important;
+    }
+
+    .podcast-section {
+        padding: 22px !important;
+    }
+}
+
+
+/* Generate Podcast — keep original shape, change only colour */
+.podcast-button {
+    background: #65d5ff !important;
+    color: #071018 !important;
+    border-color: #65d5ff !important;
+}
+
+.podcast-button:hover {
+    background: #8ae2ff !important;
+    color: #071018 !important;
+    border-color: #8ae2ff !important;
+}
+
+
+/* TOPIC CARDS — SINGLE ROW WITH BREATHING ROOM */
+.topic-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    margin: 24px 0 40px !important;
+    padding: 0 8px !important;
+}
+
+.topic-card-form {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+.topic-card {
+    width: 100% !important;
+    min-height: 170px !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 900px) {
+    .topic-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 20px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .topic-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+}
+
+
+/* LANGUAGE PAGE OPEN LAYOUT */
+.language-card { width: 100% !important; max-width: none !important; padding: 0 !important; background: transparent !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; text-align: center !important; }
+.language-welcome { margin: 0 auto 36px !important; color: var(--text-main) !important; font-size: 24px !important; font-weight: 600 !important; white-space: nowrap !important; }
+.language-card form { width: 100% !important; max-width: 470px !important; margin: 0 auto !important; }
+@media (max-width: 700px) { .language-welcome { white-space: normal !important; } }
+
+
+/* LANGUAGE MESSAGE */
+.language-card { text-align: center !important; }
+.language-welcome, .language-tagline, .language-instruction { display: block !important; width: 100% !important; text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+.language-welcome { font-size: 42px !important; font-weight: 700 !important; margin-bottom: 12px !important; color: var(--text-main) !important; }
+.language-tagline { font-size: 20px !important; margin-bottom: 28px !important; color: var(--text-secondary) !important; }
+.language-instruction { font-size: 24px !important; font-weight: 600 !important; margin-bottom: 24px !important; color: var(--text-main) !important; white-space: nowrap !important; }
+
+
+/* NEWSCast TYPOGRAPHY */
+body { font-family: 'Inter', Arial, sans-serif !important; }
+.logo { font-weight: 800 !important; letter-spacing: -0.5px !important; }
+h1 { font-weight: 700 !important; }
+h2 { font-weight: 600 !important; }
+h3 { font-weight: 600 !important; }
+p { font-weight: 400 !important; }
+button, .nav-button { font-weight: 600 !important; }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
