@@ -1,0 +1,140 @@
+﻿services\ai_service.py:12: language="en"
+services\ai_service.py:30: language_names = {
+services\ai_service.py:38: selected_language = language_names.get(
+services\ai_service.py:39: language,
+services\ai_service.py:45: {selected_language}.
+services\ai_service.py:103: {selected_language}.
+services\news_service.py:12: language="en"
+services\news_service.py:24: language_map = {
+services\news_service.py:29: hl = language_map.get(
+services\news_service.py:30: language,
+services\podcast_service.py:86: language,
+services\podcast_service.py:90: if language not in VOICE_MAP:
+services\podcast_service.py:92: f"TTS is not configured for language: {language}"
+services\podcast_service.py:95: voices = VOICE_MAP[language]
+services\podcast_service.py:213: language
+services\podcast_service.py:221: if language not in VOICE_MAP:
+services\podcast_service.py:224: f"for language: {language}"
+services\podcast_service.py:278: f"podcast_{language}_{timestamp}.mp3"
+services\podcast_service.py:297: language,
+services\source_service.py:12: language="en"
+services\source_service.py:32: language_map = {
+services\source_service.py:37: hl = language_map.get(
+services\source_service.py:38: language,
+templates\home.html:2: <html lang="{{ language }}">
+templates\home.html:30: 🌐 {{ translations["language_name"] }}
+templates\home.html:33: <!-- CHANGE LANGUAGE BUTTON -->
+templates\home.html:35: <a href="{{ url_for('language') }}"
+templates\home.html:38: {{ translations["change_language"] }}
+templates\home.html:52: {{ translations["home_title"] }}
+templates\home.html:56: {{ translations["home_description"] }}
+templates\home.html:69: placeholder="{{ translations['search_placeholder'] }}"
+templates\home.html:74: 🔍 {{ translations["search_button"] }}
+templates\home.html:89: {{ translations["trending"] }}
+templates\home.html:99: <h3>{{ translations["world"] }}</h3>
+templates\home.html:100: <p>{{ translations["world_description"] }}</p>
+templates\home.html:109: <h3>{{ translations["india"] }}</h3>
+templates\home.html:110: <p>{{ translations["india_description"] }}</p>
+templates\home.html:119: <h3>{{ translations["technology"] }}</h3>
+templates\home.html:120: <p>{{ translations["technology_description"] }}</p>
+templates\home.html:129: <h3>{{ translations["sports"] }}</h3>
+templates\home.html:130: <p>{{ translations["sports_description"] }}</p>
+templates\language.html:2: <html lang="en">
+templates\language.html:13: <title>NEWSCast - Choose Language</title>
+templates\language.html:24: <div class="language-page">
+templates\language.html:26: <div class="language-card">
+templates\language.html:28: <p class="language-welcome">Welcome to NEWSCast</p>
+templates\language.html:29: <p class="language-tagline">Stay informed. Stay ahead.</p>
+templates\language.html:30: <p class="language-instruction">Please select your preferred language to continue.</p>
+templates\language.html:34: action="{{ url_for('set_language') }}"
+templates\language.html:39: name="language"
+templates\language.html:41: class="language-button"
+templates\language.html:48: name="language"
+templates\language.html:50: class="language-button"
+templates\search.html:2: <html lang="{{ language }}">
+templates\search.html:12: {% if query == "World news" %}World News{% elif query == "India news" %}India News{% elif query == "Technology news" %}Technology News{% elif query == "Sports news" %}Sports News{% else %}{{ translations["search_results"] }}{% endif %} - NEWSCast
+templates\search.html:32: {{ translations["language_name"] }}
+templates\search.html:40: {{ translations["home"] }}
+templates\search.html:44: <a href="{{ url_for('language') }}" class="nav-button">{{ translations["change_language"] }}</a>
+templates\search.html:54: {% if query == "World news" %}World News{% elif query == "India news" %}India News{% elif query == "Technology news" %}Technology News{% elif query == "Sports news" %}Sports News{% else %}{{ translations["search_results"] }}{% endif %}
+templates\search.html:59: {{ translations["results_for"] }}
+templates\search.html:135: {{ translations["read_story"] }}
+templates\topic.html:2: <html lang="en">
+templates\topic.html:48: {{ translations['home'] }}
+templates\topic.html:57: href="{{ url_for('language') }}"
+templates\topic.html:60: {{ translations['change_language'] }}
+templates\topic.html:81: ← {{ translations['back_to_search'] }}
+templates\topic.html:147: {{ translations['read_original'] }} ↗
+templates\topic.html:170: 🎙️ {{ translations['podcast'] }}
+templates\topic.html:174: {{ translations['podcast_description'] }}
+templates\topic.html:185: 🎧 {{ translations['generate_podcast'] }}
+templates\topic.html:237: const currentLanguage =
+templates\topic.html:238: {{ language | tojson }};
+templates\topic.html:270: "⏳ {{ translations['generating'] }}";
+templates\topic.html:285: {{ translations['generating'] }}
+templates\topic.html:318: language: currentLanguage
+templates\topic.html:349: {{ translations['podcast_ready'] }}
+templates\topic.html:381: {{ translations['sources'] }}
+templates\topic.html:495: {{ translations['podcast'] }}
+templates\topic.html:524: {{ translations['transcript'] }}
+templates\topic.html:586: "🎧 {{ translations['generate_podcast'] }}";
+translations\translations.py:1: TRANSLATIONS = {
+translations\translations.py:6: "language_name": "English",
+translations\translations.py:7: "change_language": "Change Language",
+translations\translations.py:68: # Language
+translations\translations.py:69: "language_title": "Choose Your Language",
+translations\translations.py:78: "language_name": "हिंदी",
+translations\translations.py:79: "change_language": "भाषा बदलें",
+translations\translations.py:140: # Language
+translations\translations.py:141: "language_title": "अपनी भाषा चुनें",
+app.py:19: from translations.translations import TRANSLATIONS
+app.py:35: SUPPORTED_LANGUAGES = [
+app.py:42: # LANGUAGE HELPERS
+app.py:45: def get_current_language():
+app.py:46: language = session.get("language", "en")
+app.py:48: if language not in SUPPORTED_LANGUAGES:
+app.py:49: language = "en"
+app.py:51: return language
+app.py:54: def get_translations(language):
+app.py:55: return TRANSLATIONS.get(
+app.py:56: language,
+app.py:57: TRANSLATIONS.get("en", {})
+app.py:62: # HOME / LANGUAGE
+app.py:67: return render_template("language.html")
+app.py:70: @app.route("/language")
+app.py:71: def language():
+app.py:72: return render_template("language.html")
+app.py:75: @app.route("/set-language", methods=["POST"])
+app.py:76: def set_language():
+app.py:77: language = request.form.get("language", "").strip()
+app.py:79: if language not in SUPPORTED_LANGUAGES:
+app.py:80: language = "en"
+app.py:82: session["language"] = language
+app.py:93: language = get_current_language()
+app.py:94: translations = get_translations(language)
+app.py:98: language=language,
+app.py:99: translations=translations
+app.py:109: language = get_current_language()
+app.py:110: translations = get_translations(language)
+app.py:123: language=language
+app.py:135: language=language,
+app.py:136: translations=translations
+app.py:146: language = get_current_language()
+app.py:147: translations = get_translations(language)
+app.py:179: language=language,
+app.py:180: translations=translations
+app.py:190: language = get_current_language()
+app.py:191: translations = get_translations(language)
+app.py:210: language=language
+app.py:222: language=language,
+app.py:223: translations=translations
+app.py:257: language = data.get(
+app.py:258: "language"
+app.py:259: ) or get_current_language()
+app.py:262: # Validate language
+app.py:265: if language not in SUPPORTED_LANGUAGES:
+app.py:268: "error": "Unsupported language."
+app.py:334: language=language
+app.py:362: language=language
+app.py:382: language
+app.py:462: "language.html"
