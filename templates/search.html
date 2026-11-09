@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>
-        {% if query == "World news" %}World News{% elif query == "India news" %}India News{% elif query == "Technology news" %}Technology News{% elif query == "Sports news" %}Sports News{% else %}{{ translations["search_results"] }}{% endif %} - NEWSCast
+        {% if query == "World news" %}{{ translations["world_news"] }}{% elif query == "India news" %}{{ translations["india_news"] }}{% elif query == "Technology news" %}{{ translations["technology_news"] }}{% elif query == "Sports news" %}{{ translations["sports_news"] }}{% else %}{{ translations["search_results"] }}{% endif %} - NEWSCast
     </title>
 
     <link rel="stylesheet"
@@ -40,7 +40,7 @@
             {{ translations["home"] }}
 
         </a>
-        <a href="{{ url_for('home') }}" class="nav-button">Search Again</a>
+        <a href="{{ url_for('home') }}" class="nav-button">{{ translations["search_again"] }}</a>
         <a href="{{ url_for('language') }}" class="nav-button">{{ translations["change_language"] }}</a>
 
     </div>
@@ -51,7 +51,7 @@
 <main class="search-page">
 
     <h1>
-        {% if query == "World news" %}World News{% elif query == "India news" %}India News{% elif query == "Technology news" %}Technology News{% elif query == "Sports news" %}Sports News{% else %}{{ translations["search_results"] }}{% endif %}
+        {% if query == "World news" %}{{ translations["world_news"] }}{% elif query == "India news" %}{{ translations["india_news"] }}{% elif query == "Technology news" %}{{ translations["technology_news"] }}{% elif query == "Sports news" %}{{ translations["sports_news"] }}{% else %}{{ translations["search_results"] }}{% endif %}
     </h1>
 
     <p class="search-query">
@@ -83,7 +83,7 @@
                 {% else %}
 
                     <div class="result-image">
-                        📰
+                        &#128240;
                     </div>
 
                 {% endif %}
@@ -97,7 +97,7 @@
                         {{ article["source"] }}
 
                         {% if article["date"] %}
-                            • {{ article["date"] }}
+                            &#8226; {{ article["date"] }}
                         {% endif %}
 
                     </span>
@@ -133,7 +133,7 @@
                     >
 
                         {{ translations["read_story"] }}
-                        →
+                        &#8594;
 
                     </a>
 
@@ -150,15 +150,15 @@
         <div class="empty-news">
 
             <div class="empty-icon">
-                📰
+                &#128240;
             </div>
 
             <h3>
-                {% if query %}No news found{% else %}Please enter a topic to search for news.{% endif %}
+                {% if query %}{{ translations["no_news_found"] }}{% else %}{{ translations["enter_search_topic"] }}{% endif %}
             </h3>
 
             <p>
-                {% if query %}Try searching for another topic.{% endif %}
+                {% if query %}{{ translations["try_another_topic"] }}{% endif %}
             </p>
 
         </div>

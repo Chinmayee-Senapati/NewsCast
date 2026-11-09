@@ -3,3 +3,10 @@ venv/
 __pycache__/
 *.pyc
 audio/
+
+# Additional exclusions
+.venv/
+.env.*
+!.env.example
+.pytest_cache/
+*.log

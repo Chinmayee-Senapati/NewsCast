@@ -1,0 +1,8 @@
+Flask
+python-dotenv
+requests
+trafilatura
+groq
+edge-tts
+imageio-ffmpeg
+pytest

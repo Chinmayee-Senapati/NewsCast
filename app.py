@@ -1,5 +1,7 @@
+
 import os
 
+from dotenv import load_dotenv
 from flask import (
     Flask,
     jsonify,
@@ -8,11 +10,13 @@ from flask import (
     request,
     session,
     url_for,
+    send_from_directory,
 )
-from dotenv import load_dotenv
 
 from services.news_service import search_news
 from services.ai_service import generate_podcast_script
+from services.article_service import extract_article_text
+from services.translation_service import translate_texts
 from services.podcast_service import generate_podcast_audio
 from services.source_service import get_related_sources
 from services.source_bundle_service import build_source_bundle
@@ -34,7 +38,8 @@ app.secret_key = os.getenv(
 
 SUPPORTED_LANGUAGES = [
     "en",
-    "hi"
+    "hi",
+    "or",
 ]
 
 
@@ -58,6 +63,29 @@ def get_translations(language):
     )
 
 
+def translate_news_results(results, language):
+    """Translate article titles and snippets without changing source metadata."""
+    if language == "en" or not results:
+        return results
+
+    texts = []
+
+    for article in results:
+        texts.append(article.get("title", ""))
+        texts.append(article.get("snippet", ""))
+
+    translated_texts = translate_texts(
+        texts,
+        target=language
+    )
+
+    for index, article in enumerate(results):
+        article["title"] = translated_texts[index * 2]
+        article["snippet"] = translated_texts[index * 2 + 1]
+
+    return results
+
+
 # ==========================================================
 # HOME / LANGUAGE
 # ==========================================================
@@ -74,7 +102,10 @@ def language():
 
 @app.route("/set-language", methods=["POST"])
 def set_language():
-    language = request.form.get("language", "").strip()
+    language = request.form.get(
+        "language",
+        ""
+    ).strip()
 
     if language not in SUPPORTED_LANGUAGES:
         language = "en"
@@ -122,10 +153,9 @@ def search():
                 query,
                 language=language
             )
+
         except Exception as error:
-            print(
-                f"News search failed: {error}"
-            )
+            print(f"News search failed: {error}")
             results = []
 
     return render_template(
@@ -147,30 +177,12 @@ def topic():
     translations = get_translations(language)
 
     article = {
-        "title": request.args.get(
-            "title",
-            ""
-        ),
-        "source": request.args.get(
-            "source",
-            ""
-        ),
-        "date": request.args.get(
-            "date",
-            ""
-        ),
-        "snippet": request.args.get(
-            "snippet",
-            ""
-        ),
-        "thumbnail": request.args.get(
-            "thumbnail",
-            ""
-        ),
-        "link": request.args.get(
-            "link",
-            ""
-        )
+        "title": request.args.get("title", ""),
+        "source": request.args.get("source", ""),
+        "date": request.args.get("date", ""),
+        "snippet": request.args.get("snippet", ""),
+        "thumbnail": request.args.get("thumbnail", ""),
+        "link": request.args.get("link", ""),
     }
 
     return render_template(
@@ -194,12 +206,10 @@ def news_topic(topic_name):
         "world": "World news",
         "india": "India news",
         "technology": "Technology news",
-        "sports": "Sports news"
+        "sports": "Sports news",
     }
 
-    query = topic_map.get(
-        topic_name.lower()
-    )
+    query = topic_map.get(topic_name.lower())
 
     if not query:
         return "Topic not found", 404
@@ -209,10 +219,9 @@ def news_topic(topic_name):
             query,
             language=language
         )
+
     except Exception as error:
-        print(
-            f"Topic news search failed: {error}"
-        )
+        print(f"Topic news search failed: {error}")
         results = []
 
     return render_template(
@@ -228,20 +237,10 @@ def news_topic(topic_name):
 # GENERATE PODCAST
 # ==========================================================
 
-
-# ==========================================================
-# GENERATE PODCAST
-# ==========================================================
-
-@app.route(
-    "/generate-podcast",
-    methods=["POST"]
-)
+@app.route("/generate-podcast", methods=["POST"])
 def generate_podcast():
     try:
-        data = request.get_json(
-            silent=True
-        )
+        data = request.get_json(silent=True)
 
         if not data:
             return jsonify({
@@ -249,14 +248,8 @@ def generate_podcast():
                 "error": "No request data was provided."
             }), 400
 
-        article = data.get(
-            "article",
-            {}
-        )
-
-        language = data.get(
-            "language"
-        ) or get_current_language()
+        article = data.get("article", {})
+        language = data.get("language") or get_current_language()
 
         # --------------------------------------------------
         # Validate language
@@ -278,10 +271,15 @@ def generate_podcast():
                 "error": "Invalid article data."
             }), 400
 
-        title = article.get(
-            "title",
-            ""
-        ).strip()
+        title = article.get("title", "")
+
+        if not isinstance(title, str):
+            return jsonify({
+                "success": False,
+                "error": "Invalid article title."
+            }), 400
+
+        title = title.strip()
 
         if not title:
             return jsonify({
@@ -295,30 +293,14 @@ def generate_podcast():
 
         article_data = {
             "title": title,
-            "source": article.get(
-                "source",
-                ""
-            ),
-            "date": article.get(
-                "date",
-                ""
-            ),
-            "snippet": article.get(
-                "snippet",
-                ""
-            ),
-            "thumbnail": article.get(
-                "thumbnail",
-                ""
-            ),
-            "link": article.get(
-                "link",
-                ""
-            )
+            "source": article.get("source", ""),
+            "date": article.get("date", ""),
+            "snippet": article.get("snippet", ""),
+            "thumbnail": article.get("thumbnail", ""),
+            "link": article.get("link", ""),
         }
 
-        print()
-        print("=" * 60)
+        print("\n" + "=" * 60)
         print("PODCAST GENERATION STARTED")
         print("=" * 60)
 
@@ -326,8 +308,7 @@ def generate_podcast():
         # STEP 1: Collect related sources
         # --------------------------------------------------
 
-        print()
-        print("Collecting related sources...")
+        print("\nCollecting related sources...")
 
         related_sources = get_related_sources(
             article_data,
@@ -339,11 +320,32 @@ def generate_podcast():
         )
 
         # --------------------------------------------------
-        # STEP 2: Build source bundle
+        # STEP 2: Extract primary article text
         # --------------------------------------------------
 
-        print()
-        print("Building source bundle...")
+        print("\nExtracting primary article text...")
+
+        article_text = extract_article_text(
+            article_data.get("link", "")
+        )
+
+        if article_text:
+            article_data["article_text"] = article_text
+
+            print(
+                f"Extracted {len(article_text)} characters."
+            )
+        else:
+            print(
+                "Full article unavailable; "
+                "using the existing snippet."
+            )
+
+        # --------------------------------------------------
+        # STEP 3: Build source bundle
+        # --------------------------------------------------
+
+        print("\nBuilding source bundle...")
 
         source_bundle = build_source_bundle(
             article_data,
@@ -351,11 +353,10 @@ def generate_podcast():
         )
 
         # --------------------------------------------------
-        # STEP 3: Generate AI podcast script
+        # STEP 4: Generate AI podcast script
         # --------------------------------------------------
 
-        print()
-        print("Generating podcast script...")
+        print("\nGenerating podcast script...")
 
         script = generate_podcast_script(
             source_bundle,
@@ -367,51 +368,80 @@ def generate_podcast():
                 "The AI did not generate a podcast script."
             )
 
-        print()
         print("Podcast script generated.")
 
         # --------------------------------------------------
-        # STEP 4: Generate podcast audio
+        # STEP 5: Generate podcast audio
         # --------------------------------------------------
 
-        print()
-        print("Generating podcast audio...")
-
-        audio_filename = generate_podcast_audio(
-            script,
-            language
-        )
-
-        print()
         print(
-            f"Podcast audio created: "
-            f"{audio_filename}"
+            f"\nGenerating podcast audio for language: {language}..."
         )
 
-        print()
-        print("Podcast generation completed.")
-        print("=" * 60)
-        print()
+        try:
+            audio_filename = generate_podcast_audio(
+                script,
+                language
+            )
+
+            if not audio_filename:
+                raise RuntimeError(
+                    "The audio provider did not return an audio file."
+                )
+
+        except Exception as audio_error:
+            print(
+                f"Podcast audio generation failed: {audio_error}"
+            )
+
+            error_message = str(audio_error)
+
+            # Give a clear message for the known SarvamAI quota issue.
+            if language == "or" and (
+                "No credits available" in error_message
+                or "insufficient_quota_error" in error_message
+                or "402" in error_message
+            ):
+                user_message = (
+                    "Your podcast script was generated, but Odia audio "
+                    "could not be created because your SarvamAI account "
+                    "has no available credits. Add credits to SarvamAI "
+                    "or configure another Odia text-to-speech provider."
+                )
+            else:
+                user_message = (
+                    "Your podcast script was generated, but audio "
+                    f"generation failed: {error_message}"
+                )
+
+            # Do not report success when no audio was created.
+            return jsonify({
+                "success": False,
+                "script": script,
+                "audio_url": None,
+                "audio_unavailable": True,
+                "error": user_message,
+                "sources": related_sources,
+            }), 502
 
         # --------------------------------------------------
-        # STEP 5: Return result to browser
+        # STEP 6: Return success only when audio is generated
         # --------------------------------------------------
+
+        print(f"Podcast audio created: {audio_filename}")
+        print("Podcast generation completed.")
+        print("=" * 60 + "\n")
 
         return jsonify({
             "success": True,
             "script": script,
-            "audio_url": (
-                f"/audio/{audio_filename}"
-            ),
-            "sources": related_sources
-        })
+            "audio_url": f"/audio/{audio_filename}",
+            "audio_unavailable": False,
+            "sources": related_sources,
+        }), 200
 
     except Exception as error:
-        print()
-        print(
-            f"Podcast generation failed: {error}"
-        )
-        print()
+        print(f"\nPodcast generation failed: {error}\n")
 
         return jsonify({
             "success": False,
@@ -443,8 +473,6 @@ def audio(filename):
             "error": "Audio file not found."
         }), 404
 
-    from flask import send_from_directory
-
     return send_from_directory(
         audio_directory,
         filename
@@ -458,9 +486,7 @@ def audio(filename):
 @app.errorhandler(404)
 def page_not_found(error):
     return (
-        render_template(
-            "language.html"
-        ),
+        render_template("language.html"),
         404
     )
 

@@ -1,0 +1,87 @@
+```html
+<!DOCTYPE html>
+<html lang="{{ language | default('en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsCast Podcast</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px 18px;
+            background: #0b1220;
+            color: #edf4ff;
+            font-family: Arial, sans-serif;
+        }
+
+        .podcast-container {
+            max-width: 760px;
+            margin: 40px auto;
+            padding: 28px;
+            background: #121e30;
+            border: 1px solid #293b53;
+            border-radius: 18px;
+        }
+
+        h1 {
+            color: #69e0d0;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .script {
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #69e0d0;
+        }
+
+        .message {
+            padding: 14px;
+            background: #1d3046;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="podcast-container">
+        <h1>{{ translations.get('podcast_title', 'Your NewsCast Podcast') }}</h1>
+
+        {% if audio_url %}
+            <p>Your podcast is ready. Press Play to listen.</p>
+
+            <audio class="audio-player" controls preload="metadata">
+                <source src="{{ audio_url }}" type="audio/mpeg">
+                Your browser does not support audio playback.
+            </audio>
+        {% elif audio_unavailable %}
+            <p class="message">
+                The podcast script was created, but audio generation is not
+                currently available for this language.
+            </p>
+        {% else %}
+            <p class="message">
+                No playable audio file was provided. Please generate the podcast again.
+            </p>
+        {% endif %}
+
+        {% if script %}
+            <h2>Podcast Script</h2>
+            <div class="script">{{ script }}</div>
+        {% endif %}
+
+        <a class="back-link" href="{{ url_for('home') }}">← Back to NewsCast</a>
+    </main>
+</body>
+</html>
+```

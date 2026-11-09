@@ -1,63 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>NEWSCast - Choose Language</title>
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07111f">
+    <title>NEWSCast — Choose Your Language</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Language-selection page only: intentionally isolated from the rest of NewsCast. */
+        .nc-welcome, .nc-welcome * { box-sizing: border-box; }
+        .nc-welcome {
+            --nc-bg: #06101d; --nc-panel: rgba(14, 27, 44, .82);
+            --nc-line: rgba(105, 224, 220, .20); --nc-teal: #62e2d4;
+            min-height: 100vh; width: 100%; overflow: hidden; position: relative;
+            display: flex; align-items: center; color: #edf5ff;
+            background:
+                radial-gradient(ellipse at 76% 45%, rgba(0, 173, 195, .13), transparent 36%),
+                radial-gradient(ellipse at 15% 18%, rgba(20, 87, 126, .18), transparent 35%),
+                var(--nc-bg);
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            padding: 34px clamp(22px, 5.5vw, 88px);
+        }
+        .nc-welcome:before {
+            content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .22;
+            background-image: linear-gradient(rgba(117, 191, 211, .08) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(117, 191, 211, .08) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: linear-gradient(90deg, black, transparent 92%);
+        }
+        .nc-welcome-inner { width: min(1420px, 100%); margin: auto; position: relative; z-index: 1; }
+        .nc-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.04em; font-size: 26px; }
+        .nc-brand-mark { width: 14px; height: 14px; border-radius: 4px; background: var(--nc-teal); box-shadow: 0 0 22px rgba(98,226,212,.6); }
+        .nc-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(400px, .95fr); gap: clamp(30px, 5vw, 78px); align-items: center; padding-top: clamp(44px, 7vh, 84px); }
+        .nc-copy { max-width: 670px; }
+        .nc-eyebrow { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--nc-line); color: var(--nc-teal); background: rgba(29, 90, 99, .18); border-radius: 999px; padding: 9px 13px; font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+        .nc-eyebrow-dot { width: 7px; height: 7px; background: var(--nc-teal); border-radius: 50%; box-shadow: 0 0 12px var(--nc-teal); }
+        .nc-title { margin: 24px 0 18px; font-size: clamp(43px, 5.3vw, 76px); line-height: 1.04; letter-spacing: -.055em; font-weight: 800; max-width: 700px; }
+        .nc-title span { color: var(--nc-teal); display: block; }
+        .nc-description { color: #a9bed4; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.75; max-width: 570px; margin: 0 0 25px; }
+        .nc-benefits { display: flex; flex-wrap: wrap; gap: 12px 20px; color: #c1d2e2; font-size: 13px; margin: 0 0 34px; }
+        .nc-benefit { display: inline-flex; align-items: center; gap: 8px; }
+        .nc-benefit-icon { display: inline-grid; place-items: center; width: 31px; height: 31px; border-radius: 50%; color: var(--nc-teal); background: rgba(20, 164, 174, .15); font-size: 16px; }
+        .nc-language-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; max-width: 610px; }
+        .nc-language-button {
+            min-height: 76px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            border: 1px solid rgba(67, 190, 207, .48); border-radius: 17px;
+            color: #f3f8ff; background: linear-gradient(135deg, rgba(14, 47, 65, .94), rgba(10, 24, 41, .94));
+            font: inherit; font-size: 19px; font-weight: 750; cursor: pointer;
+            transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+        .nc-language-button:first-child { border: 1px solid var(--nc-teal); box-shadow: inset 0 0 0 1px rgba(98,226,212,.14), 0 0 24px rgba(42,211,206,.09); }
+        .nc-language-button:hover, .nc-language-button:focus-visible { transform: translateY(-3px); border-color: var(--nc-teal); box-shadow: 0 12px 34px rgba(0, 205, 202, .16); outline: none; }
+        .nc-language-name { display: flex; align-items: center; gap: 12px; }
+        .nc-flag { font-size: 25px; line-height: 1; }
+        .nc-arrow { color: var(--nc-teal); font-size: 25px; font-weight: 400; }
+        .nc-footnote { display: flex; align-items: center; gap: 12px; color: #758da5; font-size: 12px; margin-top: 22px; }
+        .nc-footnote:before, .nc-footnote:after { content: ""; height: 1px; width: 38px; background: rgba(98,226,212,.42); }
+        .nc-visual { position: relative; min-height: 570px; display: grid; place-items: center; isolation: isolate; }
+        .nc-globe { width: min(28vw, 365px); min-width: 245px; aspect-ratio: 1; border-radius: 50%; position: relative; display: grid; place-items: center; z-index: 1;
+            background: radial-gradient(circle at 36% 30%, rgba(80, 218, 232, .28), rgba(13, 91, 125, .28) 35%, rgba(4, 20, 39, .94) 70%);
+            border: 1px solid rgba(65, 218, 226, .65); box-shadow: 0 0 35px rgba(0, 197, 220, .18), inset 0 0 42px rgba(0, 195, 220, .18); }
+        .nc-globe:before, .nc-globe:after { content: ""; position: absolute; inset: -13%; border: 1px solid rgba(49, 205, 218, .26); border-radius: 50%; transform: rotate(-28deg) scaleY(.38); }
+        .nc-globe:after { inset: -24%; transform: rotate(35deg) scaleY(.52); border-color: rgba(49, 205, 218, .17); }
+        .nc-globe-symbol { font-size: clamp(95px, 12vw, 160px); filter: drop-shadow(0 0 24px rgba(54, 216, 236, .38)); }
+        .nc-orbit { position: absolute; width: 88%; aspect-ratio: 1; border: 1px dashed rgba(55, 181, 205, .28); border-radius: 50%; transform: rotate(-18deg) scaleY(.7); }
+        .nc-story {
+            position: absolute; z-index: 2; min-width: 168px; max-width: 205px; padding: 15px 16px;
+            border: 1px solid rgba(123, 184, 211, .22); border-radius: 15px;
+            background: linear-gradient(145deg, rgba(21, 39, 59, .95), rgba(9, 22, 38, .92));
+            box-shadow: 0 15px 40px rgba(0,0,0,.24); backdrop-filter: blur(12px);
+        }
+        .nc-story-top { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 750; }
+        .nc-story-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: rgba(65, 200, 207, .12); font-size: 19px; }
+        .nc-story small { display: block; color: #8fa7bf; font-size: 11px; font-weight: 450; margin: 7px 0 0 46px; }
+        .nc-story.world { top: 8%; left: 4%; transform: rotate(-5deg); }
+        .nc-story.india { top: 11%; right: 0; transform: rotate(4deg); }
+        .nc-story.science { top: 40%; left: -3%; transform: rotate(4deg); }
+        .nc-story.tech { top: 43%; right: -4%; transform: rotate(-4deg); }
+        .nc-story.audio { bottom: 9%; left: 15%; transform: rotate(-3deg); }
+        .nc-story.local { bottom: 5%; right: 3%; transform: rotate(3deg); }
+        @media (max-width: 1050px) {
+            .nc-layout { grid-template-columns: 1fr; padding-top: 48px; }
+            .nc-copy { max-width: 780px; }
+            .nc-visual { min-height: 440px; margin-top: 10px; }
+            .nc-globe { width: 280px; }
+            .nc-story.world { left: 10%; } .nc-story.india { right: 8%; }
+            .nc-story.science { left: 4%; } .nc-story.tech { right: 4%; }
+        }
+        @media (max-width: 600px) {
+            .nc-welcome { padding: 26px 19px 34px; }
+            .nc-brand { font-size: 23px; }
+            .nc-layout { padding-top: 38px; gap: 18px; }
+            .nc-title { font-size: clamp(39px, 11vw, 57px); line-height: 1.08; }
+            .nc-benefits { gap: 10px; margin-bottom: 25px; }
+            .nc-language-form { grid-template-columns: 1fr; }
+            .nc-language-button { min-height: 65px; }
+            .nc-visual { min-height: 350px; margin: 0 -8px; }
+            .nc-globe { min-width: 180px; width: 48vw; }
+            .nc-globe-symbol { font-size: 85px; }
+            .nc-story { min-width: 125px; max-width: 145px; padding: 10px; border-radius: 12px; }
+            .nc-story-top { font-size: 11px; gap: 7px; }
+            .nc-story-icon { width: 29px; height: 29px; font-size: 15px; }
+            .nc-story small { margin-left: 36px; font-size: 9px; }
+            .nc-story.world { top: 2%; left: 0; }
+            .nc-story.india { top: 4%; right: 0; }
+            .nc-story.science { top: 38%; left: -2%; }
+            .nc-story.tech { top: 40%; right: -2%; }
+            .nc-story.audio { bottom: 3%; left: 1%; }
+            .nc-story.local { bottom: 1%; right: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) { .nc-language-button { transition: none; } }
+    </style>
 </head>
-
 <body>
-
-    <div class="language-page">
-
-        <div class="language-card">
-
-            <p class="language-welcome">Welcome to NEWSCast</p>
-            <p class="language-tagline">Stay informed. Stay ahead.</p>
-            <p class="language-instruction">Please select your preferred language to continue.</p>
-
-            <form
-                method="POST"
-                action="{{ url_for('set_language') }}"
-            >
-
-                <button
-                    type="submit"
-                    name="language"
-                    value="en"
-                    class="language-button"
-                >
-                    🇬🇧 English
-                </button>
-
-                <button
-                    type="submit"
-                    name="language"
-                    value="hi"
-                    class="language-button"
-                >
-                    🇮🇳 हिंदी
-                </button>
-
-            </form>
-
+    <main class="nc-welcome">
+        <div class="nc-welcome-inner">
+            <div class="nc-brand"><span class="nc-brand-mark"></span><span>NEWSCast</span></div>
+            <div class="nc-layout">
+                <section class="nc-copy" aria-labelledby="welcome-title">
+                    <div class="nc-eyebrow"><span class="nc-eyebrow-dot"></span> YOUR PERSONAL NEWS STUDIO</div>
+                    <h1 class="nc-title" id="welcome-title">Your world.<br>Your news.<span>Your language.</span></h1>
+                    <p class="nc-description">Discover the stories that matter. Explore topics from around the world, then turn your news briefing into audio you can listen to.</p>
+                    <div class="nc-benefits">
+                        <span class="nc-benefit"><span class="nc-benefit-icon">◎</span> Global stories</span>
+                        <span class="nc-benefit"><span class="nc-benefit-icon">✓</span> Multiple sources</span>
+                        <span class="nc-benefit"><span class="nc-benefit-icon">♫</span> AI-powered audio</span>
+                    </div>
+                    <form class="nc-language-form" method="POST" action="{{ url_for('set_language') }}">
+                        <button type="submit" name="language" value="en" class="nc-language-button">
+                            <span class="nc-language-name"><span class="nc-flag" aria-hidden="true">🇬🇧</span> English</span>
+                            <span class="nc-arrow" aria-hidden="true">→</span>
+                        </button>
+                        <button type="submit" name="language" value="hi" class="nc-language-button">
+                            <span class="nc-language-name"><span class="nc-flag" aria-hidden="true">🇮🇳</span> हिंदी</span>
+                            <span class="nc-arrow" aria-hidden="true">→</span>
+                        </button>
+                        <button type="submit" name="language" value="or" class="nc-language-button">
+                            <span class="nc-language-name"><span class="nc-flag" aria-hidden="true">🇮🇳</span> ଓଡ଼ିଆ</span>
+                            <span class="nc-arrow" aria-hidden="true">→</span>
+                        </button>
+                    </form>
+                    <div class="nc-footnote">Choose your language to begin</div>
+                </section>
+                <section class="nc-visual" aria-label="A preview of the topics available in NewsCast">
+                    <div class="nc-orbit"></div>
+                    <div class="nc-globe"><span class="nc-globe-symbol" aria-hidden="true">🌐</span></div>
+                    <div class="nc-story world"><div class="nc-story-top"><span class="nc-story-icon">🌍</span> World news</div><small>Stories without borders</small></div>
+                    <div class="nc-story india"><div class="nc-story-top"><span class="nc-story-icon">🇮🇳</span> India</div><small>News from across the nation</small></div>
+                    <div class="nc-story science"><div class="nc-story-top"><span class="nc-story-icon">🔬</span> Science</div><small>Ideas shaping tomorrow</small></div>
+                    <div class="nc-story tech"><div class="nc-story-top"><span class="nc-story-icon">💻</span> Technology</div><small>What's changing next</small></div>
+                    <div class="nc-story audio"><div class="nc-story-top"><span class="nc-story-icon">🎙️</span> Audio briefings</div><small>Listen to your news</small></div>
+                    <div class="nc-story local"><div class="nc-story-top"><span class="nc-story-icon">📍</span> Local stories</div><small>Stay close to home</small></div>
+                </section>
+            </div>
         </div>
-
-    </div>
-
+    </main>
 </body>
-
 </html>

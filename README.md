@@ -471,7 +471,7 @@ Final podcast generation
 
 🌐 Translation Architecture
 
-NEWSCast is being redesigned so that the application does not depend on a manually predefined translation dictionary.
+NEWSCast uses a separate IndicTrans2-powered translation service instead of relying only on a manually predefined translation dictionary.
 
 The previous approach would require entries such as:
 
@@ -500,7 +500,7 @@ Handle translation failures
 Fall back to English when necessary
 Avoid requiring every UI string to be manually predefined
 
-The translations/ folder is intended to be removed once the dynamic translation architecture is implemented.
+The `translations/` folder is still present in the project. It should only be removed after confirming that no active application code depends on it.
 
 🧠 AI Source Grounding
 
@@ -754,64 +754,116 @@ Route	                                                        Purpose
 
 
 ⚙️ Installation
-1. Clone the repository
+============
+
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/Chinmayee-Senapati/NewsCast.git
-2. Open the project
 cd NewsCast
-3. Create a virtual environment
+```
+
+### 2. Set up the main Flask application
+
+Use a Python version compatible with the packages in `requirements.txt`.
+
+**Windows (PowerShell):**
+
+```powershell
 python -m venv venv
-4. Activate the virtual environment
-Windows
-venv\Scripts\activate
-Linux/macOS
+.\venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+**Linux/macOS:**
+
+```bash
+python3 -m venv venv
 source venv/bin/activate
-5. Install dependencies
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
+```
 
+### 3. Configure API credentials
 
+Create a `.env` file in the project root:
 
-🔐 Environment Configuration
-
-NEWSCast requires API credentials for external services.
-
-Create a .env file in the project root:
-
+```env
 SERPAPI_KEY=your_serpapi_key
 GROQ_API_KEY=your_groq_api_key
+```
 
-The .env file should remain private.
+Keep this file private. Never commit real API keys to GitHub.
 
-Never commit API keys to GitHub.
+A safe template can be committed as `.env.example`:
 
-
-
-📄 .env.example
-
-A .env.example file can be used to show the required configuration without exposing real credentials.
-
-Example:
-
+```env
 SERPAPI_KEY=your_serpapi_key
 GROQ_API_KEY=your_groq_api_key
+```
 
+### 4. Set up the IndicTrans2 translation environment
 
+The translation server runs separately from Flask and uses its own Python environment. This keeps the machine-learning dependencies out of the main application environment.
 
-▶️ Running the Application
+The tested setup uses **Python 3.12.10**, **PyTorch 2.14.1+cu130**, **Transformers 4.46.3**, and **IndicTransToolkit 1.1.1**.
 
-After installing the dependencies and configuring the environment variables, start the Flask development server:
+**Windows (PowerShell):**
 
-python app.py
+```powershell
+# Create the environment outside the NewsCast repository
+$AI_ENV = "$env:USERPROFILE\AI-Environments\indictrans-venv"
+py -3.12 -m venv $AI_ENV
 
-The application should be available at:
+# Install the tested CUDA-enabled PyTorch build
+& "$AI_ENV\Scripts\python.exe" -m pip install --upgrade pip
+& "$AI_ENV\Scripts\python.exe" -m pip install torch==2.14.1+cu130 --index-url https://download.pytorch.org/whl/cu130
 
-http://127.0.0.1:5000
+# Install the translation dependencies
+& "$AI_ENV\Scripts\python.exe" -m pip install transformers==4.46.3 indictranstoolkit==1.1.1
+```
 
-Open the URL in a browser to use NEWSCast.
+This is the tested NVIDIA CUDA configuration. GPU acceleration requires a compatible NVIDIA GPU, driver, and CUDA-enabled PyTorch installation. The translation server is configured to fall back to CPU when CUDA is unavailable, although translation may be slower.
 
+The translation model is `ai4bharat/indictrans2-en-indic-dist-200M`. The model files may need to be downloaded the first time the server loads, so an internet connection is required for the initial setup.
 
+> **Note:** The commands above document the tested Windows setup. For another operating system or GPU configuration, install a compatible PyTorch build from the official PyTorch installation instructions before installing the translation dependencies.
 
+### 5. Run the application
 
-🧪 Testing
+NewsCast uses two local services when translation is required. Keep both terminals running.
+
+**Terminal 1 — IndicTrans2 translation server (Windows):**
+
+```powershell
+$AI_ENV = "$env:USERPROFILE\AI-Environments\indictrans-venv"
+& "$AI_ENV\Scripts\python.exe" .\translation_service\server.py
+```
+
+The translation server listens at:
+
+`http://127.0.0.1:8765`
+
+**Terminal 2 — Flask application (Windows):**
+
+```powershell
+.\venv\Scripts\python.exe app.py
+```
+
+**Terminal 2 — Flask application (Linux/macOS):**
+
+```bash
+./venv/bin/python app.py
+```
+
+The Flask application is available at:
+
+`http://127.0.0.1:5000`
+
+Open that address in your browser. Start the translation server before using features that depend on translation. The Flask application can be run separately when translation is not needed.
+
+---
+
+Testing
 
 Individual services can be tested independently.
 
